@@ -7,7 +7,7 @@ internal class ExportCommand : Command
     internal readonly Option<string> ServerOption;
     internal readonly Option<string> LoginOption;
     internal readonly Option<string> PasswordOption;
-    internal readonly Option<ulong> DeviceIdOption;
+    internal readonly Option<string> DeviceIdOption;
     internal readonly Option<DateTimeOffset> StartOption;
     internal readonly Option<DateTimeOffset> EndOption;
 
@@ -36,7 +36,7 @@ internal class ExportCommand : Command
         };
         Add(PasswordOption);
 
-        DeviceIdOption = new Option<ulong>(new[] { "--device-id" }, "Device id")
+        DeviceIdOption = new Option<string>(new[] { "--device-id" }, "Device id")
         {
             IsRequired = true
         };

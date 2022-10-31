@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SinoTrackTraccarDataConverter.CLI.Models;
+namespace SinoTrackTraccarDataConverter.CLI.ResponseModels;
 
 internal class ReplayResponseModel
 {
@@ -8,7 +8,7 @@ internal class ReplayResponseModel
     public string[] RecordFields { get; set; }
 
     [JsonPropertyName("m_arrRecord")]
-    public object[] Records { get; set; }
+    public string[][] Records { get; set; }
 
     [JsonPropertyName("m_nCount")]
     public int RecordsCount { get; set; }
