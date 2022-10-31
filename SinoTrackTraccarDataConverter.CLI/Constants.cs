@@ -10,4 +10,6 @@ internal static class Constants
         { "SinoTracking", "https://101.sinotrack.com/APP/AppJson.asp" },
         { "SinoTrackPro", "https://245.sinotrack.com/APP/AppJson.asp" },
     };
+
+    internal static string ReplayRecordsFolderName = "ReplayRecords";
 }

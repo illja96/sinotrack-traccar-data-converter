@@ -77,7 +77,7 @@ internal class ExportCommandHandler : ICommandHandler
 
         context.Console.WriteLine("Mapping replay records");
         var replayRecords = MapToReplayRecords(replays);
-        context.Console.WriteLine("Replay records mapped");
+        context.Console.WriteLine($"{replayRecords.Length} replay records mapped");
 
         var fileName = await SaveRecordsToFileAsync(replayRecords, cancellationToken);
         context.Console.WriteLine($"Replay records saved in {fileName} file");
@@ -121,14 +121,14 @@ internal class ExportCommandHandler : ICommandHandler
 
     private async Task<string> SaveRecordsToFileAsync(ReplayRecord[] replayRecords, CancellationToken cancellationToken = default)
     {
-        var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "ReplayRecords");
+        var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), Constants.ReplayRecordsFolderName);
         if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
 
         const string fileDateFormat = "yyyy-MM-dd";
         var fileName = $"{DeviceId} {Start.ToString(fileDateFormat)} {End.ToString(fileDateFormat)}.json";
         var filePath = Path.Combine(directoryPath, fileName);
 
-        var fileStream = File.OpenWrite(filePath);
+        await using var fileStream = File.OpenWrite(filePath);
         await JsonSerializer.SerializeAsync(fileStream, replayRecords, cancellationToken: cancellationToken);
 
         return fileName;
