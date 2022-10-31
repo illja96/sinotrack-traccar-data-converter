@@ -1,57 +1,58 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace SinoTrackTraccarDataConverter.CLI.Models;
 
 internal class ReplayRecord
 {
-    [JsonPropertyName("nID")]
+    [DisplayName("nID")]
     public int RecordId { get; set; }
 
-    [JsonPropertyName("strTEID")]
+    [DisplayName("strTEID")]
     public string TEID { get; set; }
 
-    [JsonPropertyName("nTime")]
+    [JsonIgnore]
+    [DisplayName("nTime")]
     public long UnixTimeSeconds { get; set; }
 
-    [JsonIgnore]
     public DateTimeOffset DateTime => DateTimeOffset.FromUnixTimeSeconds(UnixTimeSeconds);
 
-    [JsonPropertyName("dbLon")]
+    [DisplayName("dbLon")]
     public decimal Longitude { get; set; }
 
-    [JsonPropertyName("dbLat")]
+    [DisplayName("dbLat")]
     public decimal Latitude { get; set; }
 
-    [JsonPropertyName("nDirection")]
+    [DisplayName("nDirection")]
     public int Direction { get; set; }
 
-    [JsonPropertyName("nSpeed")]
+    [DisplayName("nSpeed")]
     public int Speed { get; set; }
 
-    [JsonPropertyName("nGSMSignal")]
+    [DisplayName("nGSMSignal")]
     public int GSMSignal { get; set; }
 
-    [JsonPropertyName("nGPSSignal")]
+    [DisplayName("nGPSSignal")]
     public int GPSSignal { get; set; }
 
-    [JsonPropertyName("nFuel")]
+    [DisplayName("nFuel")]
     public int Fuel { get; set; }
 
-    [JsonPropertyName("nMileage")]
+    [DisplayName("nMileage")]
     public int Mileage { get; set; }
 
-    [JsonPropertyName("nTemp")]
+    [DisplayName("nTemp")]
     public int Temp { get; set; }
 
-    [JsonPropertyName("nCarState")]
+    [DisplayName("nCarState")]
     public int CarState { get; set; }
 
-    [JsonPropertyName("nTEState")]
+    [DisplayName("nTEState")]
     public int TEState { get; set; }
 
-    [JsonPropertyName("nAlarmState")]
+    [DisplayName("nAlarmState")]
     public int AlarmState { get; set; }
 
-    [JsonPropertyName("strOther")]
+    [DisplayName("strOther")]
     public string Other { get; set; }
 }

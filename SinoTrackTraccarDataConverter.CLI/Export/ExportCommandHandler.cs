@@ -1,10 +1,10 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.CommandLine.IO;
+using System.ComponentModel;
 using System.Net;
 using System.Reflection;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using SinoTrackTraccarDataConverter.CLI.Models;
 using SinoTrackTraccarDataConverter.CLI.ResponseModels;
 
@@ -57,12 +57,14 @@ internal class ExportCommandHandler : ICommandHandler
         var totalPages = 0;
         do
         {
+            page++;
+
             if (totalPages == 0) context.Console.WriteLine($"Downloading {page} replay records page");
             else context.Console.WriteLine($"Downloading {page}/{totalPages} replay records page");
 
-            page++;
             var replay = await GetReplayAsync(url, page, cancellationToken);
             replays.Add(replay);
+
             totalPages = replay.TotalPages;
         } while (page != totalPages);
         context.Console.WriteLine("Replay records downloaded");
@@ -113,11 +115,11 @@ internal class ExportCommandHandler : ICommandHandler
 
     private async Task<string> SaveRecordsToFileAsync(ReplayRecord[] replayRecords, CancellationToken cancellationToken = default)
     {
-        var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "replayRecords");
+        var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "ReplayRecords");
         if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
 
         const string fileDateFormat = "yyyy-MM-dd";
-        var fileName = $"ReplayRecords {DeviceId} {Start.ToString(fileDateFormat)} {End.ToString(fileDateFormat)}.json";
+        var fileName = $"{DeviceId} {Start.ToString(fileDateFormat)} {End.ToString(fileDateFormat)}.json";
         var filePath = Path.Combine(directoryPath, fileName);
 
         var fileStream = File.OpenWrite(filePath);
@@ -133,7 +135,7 @@ internal class ExportCommandHandler : ICommandHandler
         for (var fieldIndex = 0; fieldIndex < recordsFields.Length; fieldIndex++)
         {
             var fieldName = recordsFields[fieldIndex];
-            var property = typeof(ReplayRecord).GetProperties().Single(_ => _.GetCustomAttribute<JsonPropertyNameAttribute>()?.Name == fieldName);
+            var property = typeof(ReplayRecord).GetProperties().Single(_ => _.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName == fieldName);
 
             fieldIndexToProperty.Add(fieldIndex, property);
         }
