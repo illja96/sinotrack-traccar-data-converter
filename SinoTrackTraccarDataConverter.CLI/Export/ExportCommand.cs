@@ -11,7 +11,7 @@ internal class ExportCommand : Command
     internal readonly Option<DateTimeOffset> StartOption;
     internal readonly Option<DateTimeOffset> EndOption;
 
-    public ExportCommand() : base("export", "Export data from SinoTrack")
+    public ExportCommand() : base("export", "Export data from SinoTrack IOT platform")
     {
         ServerOption = new Option<string>(new[] { "--server" }, "Server")
         {
@@ -42,13 +42,13 @@ internal class ExportCommand : Command
         };
         Add(DeviceIdOption);
 
-        StartOption = new Option<DateTimeOffset>(new[] { "--start" }, "Start datetime (ISO 8601)")
+        StartOption = new Option<DateTimeOffset>(new[] { "--start" }, "Start of export period (ISO 8601)")
         {
             IsRequired = true
         };
         Add(StartOption);
 
-        EndOption = new Option<DateTimeOffset>(new[] { "--end" }, "End datetime (ISO 8601)")
+        EndOption = new Option<DateTimeOffset>(new[] { "--end" }, "End of export period (ISO 8601)")
         {
             IsRequired = true
         };

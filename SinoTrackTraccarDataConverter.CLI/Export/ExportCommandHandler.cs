@@ -63,6 +63,12 @@ internal class ExportCommandHandler : ICommandHandler
             else context.Console.WriteLine($"Downloading {page}/{totalPages} replay records page");
 
             var replay = await GetReplayAsync(url, page, cancellationToken);
+            if (page == 1 && replay.RecordsCount == 0)
+            {
+                context.Console.WriteLine("No records found for selected period");
+                return 0;
+            }
+
             replays.Add(replay);
 
             totalPages = replay.TotalPages;
