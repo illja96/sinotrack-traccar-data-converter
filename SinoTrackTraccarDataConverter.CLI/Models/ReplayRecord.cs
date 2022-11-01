@@ -89,10 +89,22 @@ internal class ReplayRecord
     public int Temp { get; set; }
 
     /// <summary>
-    /// TODO: Unknown
+    /// Flagged car state
+    /// 8 - Car shake
+    /// 32 - Door open
+    /// 128 - Engine on
+    /// 512 - Refuel
+    /// 1024 - Heavy
+    /// 4096 - Start defend
     /// </summary>
     [DisplayName("nCarState")]
     public int CarState { get; set; }
+
+    /// <summary>
+    /// Car state
+    /// </summary>
+    [JsonIgnore]
+    public CarStateEnum CarStateEnum => (CarStateEnum)CarState;
 
     /// <summary>
     /// TODO: Unknown

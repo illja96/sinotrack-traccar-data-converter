@@ -72,8 +72,7 @@ internal class InsertPostgresCommandHandler : ICommandHandler
             context.Console.WriteLine($"{i}/{replayRecords.Length} replay record inserted");
         }
         context.Console.WriteLine("Replay record inserted");
-
-
+        
         context.Console.WriteLine("Selecting last position record");
         var lastPositionQuery = $"SELECT id FROM tc_positions WHERE deviceid = '{deviceDatabaseId}' ORDER BY devicetime DESC LIMIT 1";
         await using var lastPositionCommand = new NpgsqlCommand(lastPositionQuery, postgresConnection);
@@ -97,15 +96,22 @@ internal class InsertPostgresCommandHandler : ICommandHandler
     {
         var attributes = new
         {
-            totalDistance = replayRecord.Mileage / 1000.0,
-            migratedFrom = "SinoTrack IOT"
+            totalDistance = replayRecord.Mileage,
+            ignition = replayRecord.CarStateEnum.HasFlag(CarStateEnum.EngineOn),
+            
+            carShake = replayRecord.CarStateEnum.HasFlag(CarStateEnum.CarShake),
+            doorOpen = replayRecord.CarStateEnum.HasFlag(CarStateEnum.DoorOpen),
+            engineOn = replayRecord.CarStateEnum.HasFlag(CarStateEnum.EngineOn),
+            refuel = replayRecord.CarStateEnum.HasFlag(CarStateEnum.Refuel),
+            heavy = replayRecord.CarStateEnum.HasFlag(CarStateEnum.Heavy),
+            startDefend = replayRecord.CarStateEnum.HasFlag(CarStateEnum.StartDefend)
         };
         var attributesJson = JsonSerializer.Serialize(attributes);
-
+        
         var timestampWithoutTimeZone = replayRecord.DateTime.ToString(Constants.TimestampWithoutTimeZoneFormat);
         var fieldValueDictionary = new Dictionary<string, string>()
         {
-            { "protocol", "'h02'" },
+            { "protocol", "'SinoTrack'" },
             { "deviceid", $"'{deviceDatabaseId}'" },
             { "servertime", $"'{timestampWithoutTimeZone}'" },
             { "devicetime", $"'{timestampWithoutTimeZone}'" },
