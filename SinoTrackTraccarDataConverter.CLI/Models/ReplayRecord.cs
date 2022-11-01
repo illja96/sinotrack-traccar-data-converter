@@ -20,13 +20,13 @@ internal class ReplayRecord
     /// <summary>
     /// Record unix timestamp
     /// </summary>
-    [JsonIgnore]
     [DisplayName("nTime")]
     public long UnixTimeSeconds { get; set; }
 
     /// <summary>
     /// Record datetime
     /// </summary>
+    [JsonIgnore]
     public DateTimeOffset DateTime => DateTimeOffset.FromUnixTimeSeconds(UnixTimeSeconds);
 
     /// <summary>

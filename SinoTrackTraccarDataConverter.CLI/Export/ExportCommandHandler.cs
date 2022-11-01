@@ -127,8 +127,8 @@ internal class ExportCommandHandler : ICommandHandler
         const string fileDateFormat = "yyyy-MM-dd";
         var fileName = $"{DeviceId} {Start.ToString(fileDateFormat)} {End.ToString(fileDateFormat)}.json";
         var filePath = Path.Combine(directoryPath, fileName);
-
-        await using var fileStream = File.OpenWrite(filePath);
+        
+        await using var fileStream = File.Create(filePath);
         await JsonSerializer.SerializeAsync(fileStream, replayRecords, cancellationToken: cancellationToken);
 
         return fileName;

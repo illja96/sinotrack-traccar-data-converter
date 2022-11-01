@@ -12,4 +12,6 @@ internal static class Constants
     };
 
     internal static string ReplayRecordsFolderName = "ReplayRecords";
+
+    internal static string TimestampWithoutTimeZoneFormat = "yyyy-MM-dd HH:mm:ss";
 }
