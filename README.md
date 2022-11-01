@@ -1,4 +1,4 @@
-# SinoTrack IOT platform to Traccar data converter
+# SinoTrack IOT platform to Traccar data converter / migration solution
 
 ## Description
 CLI allows to export data from [SinoTrack IOT platform](https://www.sinotrack.com) to JSON file and insert it into your own [Traccar server](https://www.traccar.org) PostgreSQL database.
