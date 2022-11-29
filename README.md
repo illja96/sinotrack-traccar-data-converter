@@ -23,8 +23,7 @@ export --server SinoTracking --login USERNAME --password PASSWORD --device-id 12
 ```
 Docker example:
 ``` pwsh
-docker build -t sinotrack-traccar-data-converter .
-docker run -v C:\ReplayRecords:/app/ReplayRecords -it sinotrack-traccar-data-converter export --server SinoTracking --login USERNAME --password PASSWORD --device-id 1234567890 --start 2022-01-01T00:00:00Z --end 2023-01-01T00:00:00Z
+docker run -v C:\ReplayRecords:/app/ReplayRecords -it ghcr.io/illja96/sinotrack-traccar-data-converter:master export --server SinoTracking --login USERNAME --password PASSWORD --device-id 1234567890 --start 2022-01-01T00:00:00Z --end 2023-01-01T00:00:00Z
 ```
 
 ### Insert
@@ -42,5 +41,5 @@ insert-postgres --file-name "1234567890 2022-01-01 2023-01-01.json" --host 127.0
 ```
 Docker example:
 ``` pwsh
-docker run -v C:\ReplayRecords:/app/ReplayRecords -it sinotrack-traccar-data-converter insert-postgres --file-name "1234567890 2022-01-01 2023-01-01.json" --host 127.0.0.1 --username USERNAME --password PASSWORD --database traccar
+docker run -v C:\ReplayRecords:/app/ReplayRecords -it ghcr.io/illja96/sinotrack-traccar-data-converter:master insert-postgres --file-name "1234567890 2022-01-01 2023-01-01.json" --host 127.0.0.1 --username USERNAME --password PASSWORD --database traccar
 ```
