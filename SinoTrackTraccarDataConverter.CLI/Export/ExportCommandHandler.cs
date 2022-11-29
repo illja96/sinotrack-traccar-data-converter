@@ -79,8 +79,8 @@ internal class ExportCommandHandler : ICommandHandler
         var replayRecords = MapToReplayRecords(replays);
         context.Console.WriteLine($"{replayRecords.Length} replay records mapped");
 
-        var fileName = await SaveRecordsToFileAsync(replayRecords, cancellationToken);
-        context.Console.WriteLine($"Replay records saved in {fileName} file");
+        var filePath = await SaveRecordsToFileAsync(replayRecords, cancellationToken);
+        context.Console.WriteLine($"Replay records saved in \"{filePath}\" file");
 
         return 0;
     }
@@ -131,7 +131,7 @@ internal class ExportCommandHandler : ICommandHandler
         await using var fileStream = File.Create(filePath);
         await JsonSerializer.SerializeAsync(fileStream, replayRecords, cancellationToken: cancellationToken);
 
-        return fileName;
+        return filePath;
     }
 
     private static ReplayRecord[] MapToReplayRecords(IEnumerable<ReplayResponseModel> replays)
