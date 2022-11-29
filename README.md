@@ -17,9 +17,14 @@ Both SinoTrack IOT platform and Traccar could be updated with no backward compat
 This command will login into SinoTract IOT platform and dump all replay records in specified period for device into JSON file.
 File can be found in ``ReplayRecords`` folder with ``1234567890 2022-01-01 2023-01-01.json`` file name.
 
-Example:
-``` bash
+CLI example:
+``` pwsh
 export --server SinoTracking --login USERNAME --password PASSWORD --device-id 1234567890 --start 2022-01-01T00:00:00Z --end 2023-01-01T00:00:00Z
+```
+Docker example:
+``` pwsh
+docker build -t sinotrack-traccar-data-converter .
+docker run -v C:\ReplayRecords:/app/ReplayRecords -it sinotrack-traccar-data-converter export --server SinoTracking --login USERNAME --password PASSWORD --device-id 1234567890 --start 2022-01-01T00:00:00Z --end 2023-01-01T00:00:00Z
 ```
 
 ### Insert
@@ -31,7 +36,11 @@ For now, only PostgreSQL database supported (because I use it, duh).
 ### InsertPostgres
 This command will read JSON file with exported replay records and insert them into Traccar PostgreSQL database directly.
 
-Example:
-``` bash
+CLI example:
+``` pwsh
 insert-postgres --file-name "1234567890 2022-01-01 2023-01-01.json" --host 127.0.0.1 --username USERNAME --password PASSWORD --database traccar
+```
+Docker example:
+``` pwsh
+docker run -v C:\ReplayRecords:/app/ReplayRecords -it sinotrack-traccar-data-converter insert-postgres --file-name "1234567890 2022-01-01 2023-01-01.json" --host 127.0.0.1 --username USERNAME --password PASSWORD --database traccar
 ```
